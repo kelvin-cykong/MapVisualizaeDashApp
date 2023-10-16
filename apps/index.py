@@ -54,50 +54,53 @@ def display_page(pathname, user_id):
      State(component_id='password', component_property='value')],
      prevent_initial_call='initial_duplicate'
 )
-def update_output(n_clicks, input1, input2):
+def update_output(n_clicks, username, password):
     Error_Message = "Wrong Username/Password!"
     Missing_Message_1 = "Username is required."
     Missing_Message_2 = "Password is required."
     Missing_Message_3 = "Username and Password are required."
     # Check user credentials (use a secure method in real-world scenarios)
     if n_clicks:
-        if input1 in user_data.keys() and input2 == user_data[input1]:
+        if username in user_data.keys() and password == user_data[username]:
             # Use Flask's redirect and url_for functions
             return "True", 'Logged in Successful!'
-        elif input1 in user_data.keys() and input2 != user_data[input1]:
+        elif username in user_data.keys() and password != user_data[username]:
             return "False", Error_Message
-        elif input1 not in user_data.keys() and input2 is not None:
+        elif username not in user_data.keys() and password is not None:
             return "False", Error_Message
-        elif not input1:
+        elif not username:
             return "False", Missing_Message_1
-        elif not input2:
+        elif not password:
             return "False", Missing_Message_2
-        elif not input1 and not input2:
+        elif not username and not password:
             return "False", Missing_Message_3
         else:
             return "False", None
-    return "False", None
+    return dash.no_update, None
+
         
 @app.callback(
     Output(component_id='url', component_property='pathname', allow_duplicate=True),
+    Output(component_id='user_id', component_property='data'),
     [Input(component_id='login_status', component_property='modified_timestamp')],
-    State(component_id='login_status', component_property='data'),
+    [State(component_id='login_status', component_property='data'),
+    State(component_id='username', component_property='value')],
     prevent_initial_call='initial_duplicate'
 )
-def check_login_successful(timestamp, login_status):
+def check_login_successful(timestamp, login_status, username):
     if timestamp:
         if login_status == 'True':
             time.sleep(0.5)
-            return '/dashboard'
+            return '/dashboard', username
         else:
-            return '/'
+            return dash.no_update, None
     else:
-        '/'
+        return dash.no_update, None
 
 
 
 @app.callback(
-    Output('url', 'pathname',allow_duplicate=True),
+    Output('url', 'pathname', allow_duplicate=True),
     [Input(component_id='logout-button', component_property='n_clicks')],
     prevent_initial_call=True
 )
