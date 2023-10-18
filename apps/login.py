@@ -4,11 +4,15 @@ from dash.dependencies import Input, Output, State
 
 
 layout = html.Div([
-    html.Div(children=['Interactive Dashboard Login Page'], id='headline'),
+    html.Div(children=['User Login Page'], id='headline'),
     html.Br(),
-    dbc.Input(id="username", placeholder="Username", type="text"),
-    dbc.Input(id="password", placeholder="Password", type="password", className="mt-2"),
+    dbc.Input(id="username", placeholder="Username", type="text", style={'width':'450px'}),
+    dbc.Input(id="password", placeholder="Password", type="password", className="mt-2", style={'width':'450px'}),
     html.Br(),
-    dbc.Button('Submit', id='login-button', n_clicks=0, className="mt-2"),
-    html.Div(id="error-div")
-], style={'padding':'40px'})
+    dbc.Button('Login', id='login-button', n_clicks=0, className="mt-2", style={"marginRight": "10px"}),
+    dbc.Button('Forgot Username/Password', id='forgot-button', n_clicks=0, className="mt-2", style={"marginRight": "10px"}),
+    html.Br(),
+    html.Br(),
+    html.Div(id="error-div", style={'width': '450px'})
+], style={'margin': '40px 40px 0px 40px', 'align':'center'})
+
