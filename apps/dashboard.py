@@ -1,5 +1,7 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
+import pandas as pd
+import plotly.graph_objects as go
 
 ### Tab content
 tab1_content = dbc.Card(
@@ -46,13 +48,13 @@ layout = html.Div([
 
 
 ### Dashboard Function:
-import pandas as pd
+
 def read_vehicle_data():
     data2023 = pd.read_csv('https://data.ca.gov/dataset/15179472-adeb-4df6-920a-20640d02b08c/resource/9aa5b4c5-252c-4d68-b1be-ffe19a2f1d26/download/vehicle-fuel-type-count-by-zip-code-2022.csv')
     return data2023
 
 
-import plotly.graph_objects as go
+
 def create_figure():
     california_geojson = {
     "type": "FeatureCollection",
